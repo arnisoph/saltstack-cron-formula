@@ -5,3 +5,4 @@ cron:
         cmd: duply myprofile full
         minute: random
         hour: 22
+        daymonth: '*'
