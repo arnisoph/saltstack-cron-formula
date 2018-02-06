@@ -25,3 +25,18 @@ cron_job_{{ k }}:
     - comment: {{ v.comment }}
   {% endif %}
 {% endfor %}
+
+{% set envs = datamap.envs|default({}) %}
+{% for k, v in envs|dictsort %}
+cron_env_{{ k }}:
+  {% if v.present %}
+  cron.env_present:
+  {% else %}
+  cron.env_absent:
+  {% endif %}
+    - name: {{ k }}
+    - value: {{ v.value|default() }}
+  {% if 'user' in v %}
+    - user: {{ v.user }}
+  {% endif %}
+{% endfor %}
