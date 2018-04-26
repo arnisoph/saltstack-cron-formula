@@ -6,6 +6,12 @@ cron:
         minute: random
         hour: 22
         daymonth: '*'
+      daily_cron:
+        cmd: echo 'hello world daily'
+        special: '@daily'
+      on_reboot_cron:
+        cmd: echo 'execute a cron on reboot'
+        special: '@reboot'
     envs:
       MAILTO:
         present: True

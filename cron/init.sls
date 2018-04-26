@@ -7,17 +7,22 @@ include: {{ datamap.sls_include|default([]) }}
 extend: {{ datamap.sls_extend|default({}) }}
 
 {% set jobs = datamap.jobs|default({}) %}
+{% if jobs is iterable %}
 {% for k, v in jobs|dictsort %}
 cron_job_{{ k }}:
   cron:
     - {{ v.ensure|default('present') }}
     - name: {{ v.cmd }}
     - identifier: {{ k }}
+    {% if 'special' in v %}
+    - special: '{{ v.special }}'
+    {% else %}
     - minute: '{{ v.minute|default('*') }}'
     - hour: '{{ v.hour|default('*') }}'
     - daymonth: '{{ v.daymonth|default('*') }}'
     - month: '{{ v.month|default('*') }}'
     - dayweek: '{{ v.dayweek|default('*') }}'
+    {% endif %}
   {% if 'user' in v %}
     - user: {{ v.user }}
   {% endif %}
@@ -25,8 +30,10 @@ cron_job_{{ k }}:
     - comment: {{ v.comment }}
   {% endif %}
 {% endfor %}
+{% endif %}
 
 {% set envs = datamap.envs|default({}) %}
+{% if envs is iterable %}
 {% for k, v in envs|dictsort %}
 cron_env_{{ k }}:
   {% if v.present %}
@@ -40,3 +47,4 @@ cron_env_{{ k }}:
     - user: {{ v.user }}
   {% endif %}
 {% endfor %}
+{% endif %}
