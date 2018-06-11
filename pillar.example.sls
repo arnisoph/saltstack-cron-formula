@@ -16,6 +16,11 @@ cron:
       MAILTO:
         present: True
         value: ""
+      MAILTO-for-other-user:
+        name: MAILTO
+        present: True
+        value: ""
+        user: 'www'
       PATH:
         present: True
         value: /sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/CUSTOM_PATH
