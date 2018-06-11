@@ -41,7 +41,11 @@ cron_env_{{ k }}:
   {% else %}
   cron.env_absent:
   {% endif %}
+    {% if v.name is defined %}
+    - name: {{ v.name }}
+    {% else %}
     - name: {{ k }}
+    {% endif %}
     - value: {{ v.value|default() }}
   {% if 'user' in v %}
     - user: {{ v.user }}
