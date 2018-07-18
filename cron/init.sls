@@ -12,7 +12,7 @@ extend: {{ datamap.sls_extend|default({}) }}
 cron_job_{{ k }}:
   cron:
     - {{ v.ensure|default('present') }}
-    - name: {{ v.cmd }}
+    - name: '{{ v.cmd }}'
     - identifier: {{ k }}
     {% if 'special' in v %}
     - special: '{{ v.special }}'
